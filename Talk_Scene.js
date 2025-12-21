@@ -86,39 +86,41 @@ var Talk_Scene = function(Position){
     };
     for(var I = 0; I < ChoiceText.length; I++) ChoiceText[I]._element.textContent = "";
     if(Datas.フラグ){
-      switch(Datas.フラグ[1]){
-        case "リセット":
-          Flags = {};
-          break;
-        case "=":
-          switch(Datas.フラグ[0]){
-            case "時間":
-              if(!Flags[Datas.フラグ[0]]) Flags[Datas.フラグ[0]] = new Date().toLocaleString("ja-JP").slice(0,-3);
-              Temp = new Date(Flags[Datas.フラグ[0]]);
-              Flags[Datas.フラグ[0]] = Flags[Datas.フラグ[0]].replace(/ \d{1,2}:\d{1,2}/," " + Datas.フラグ[2]);
-              Flags[Datas.フラグ[0]] = new Date(Flags[Datas.フラグ[0]]);
-              if(Temp.getTime() >= Flags[Datas.フラグ[0]].getTime()) Flags[Datas.フラグ[0]].setDate(Flags[Datas.フラグ[0]].getDate() + 1);
-              Flags[Datas.フラグ[0]] = Flags[Datas.フラグ[0]].toLocaleString("ja-JP").slice(0,-3);
-              break;
-            default:
-              Flags[Datas.フラグ[0]] = Datas.フラグ[2];
-              break;
-          };
-          break;
-        case "+":
-          switch(Datas.フラグ[0]){
-            case "時間":
-              if(!Flags[Datas.フラグ[0]]) Flags[Datas.フラグ[0]] = new Date();
-              else Flags[Datas.フラグ[0]] = new Date(Flags[Datas.フラグ[0]]);
-              Flags[Datas.フラグ[0]].setMinutes(Flags[Datas.フラグ[0]].getMinutes() + Datas.フラグ[2]);
-              Flags[Datas.フラグ[0]] = new Date(Flags[Datas.フラグ[0]]).toLocaleString("ja-JP").slice(0,-3);
-              break;
-            default:
-              if(!Flags[Datas.フラグ[0]]) Flags[Datas.フラグ[0]] = 0;
-              Flags[Datas.フラグ[0]] += Datas.フラグ[2];
-              break;
-          };
-          break;
+      for(var J = 0; J < Datas.フラグ.length; J++){
+        switch(Datas.フラグ[J][1]){
+          case "リセット":
+            Flags = {};
+            break;
+          case "=":
+            switch(Datas.フラグ[J][0]){
+              case "時間":
+                if(!Flags[Datas.フラグ[J][0]]) Flags[Datas.フラグ[J][0]] = new Date().toLocaleString("ja-JP").slice(0,-3);
+                Temp = new Date(Flags[Datas.フラグ[J][0]]);
+                Flags[Datas.フラグ[J][0]] = Flags[Datas.フラグ[J][0]].replace(/ \d{1,2}:\d{1,2}/," " + Datas.フラグ[J][2]);
+                Flags[Datas.フラグ[J][0]] = new Date(Flags[Datas.フラグ[J][0]]);
+                if(Temp.getTime() >= Flags[Datas.フラグ[J][0]].getTime()) Flags[Datas.フラグ[J][0]].setDate(Flags[Datas.フラグ[J][0]].getDate() + 1);
+                Flags[Datas.フラグ[J][0]] = Flags[Datas.フラグ[J][0]].toLocaleString("ja-JP").slice(0,-3);
+                break;
+              default:
+                Flags[Datas.フラグ[J][0]] = Datas.フラグ[J][2];
+                break;
+            };
+            break;
+          case "+":
+            switch(Datas.フラグ[J][0]){
+              case "時間":
+                if(!Flags[Datas.フラグ[J][0]]) Flags[Datas.フラグ[J][0]] = new Date();
+                else Flags[Datas.フラグ[J][0]] = new Date(Flags[Datas.フラグ[J][0]]);
+                Flags[Datas.フラグ[J][0]].setMinutes(Flags[Datas.フラグ[J][0]].getMinutes() + Datas.フラグ[J][2]);
+                Flags[Datas.フラグ[J][0]] = new Date(Flags[Datas.フラグ[J][0]]).toLocaleString("ja-JP").slice(0,-3);
+                break;
+              default:
+                if(!Flags[Datas.フラグ[J][0]]) Flags[Datas.フラグ[J][0]] = 0;
+                Flags[Datas.フラグ[J][0]] += Datas.フラグ[J][2];
+                break;
+            };
+            break;
+        };
       };
       console.log(Flags);
     };
