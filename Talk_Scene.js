@@ -683,6 +683,10 @@ var Talk_Scene = function(Position){
   });
 
   scene.addEventListener("touchstart",function(e){
+    if(!Next){
+      while(!Next) Text_Display();
+      return;
+    };
     if(Next=="選"){
       for(var I = 0; I < Datas.選択肢.length; I++){
         ChoiceText[I].枠2.opacity = 0;
