@@ -52,6 +52,12 @@ var Talk_Scene = function(Position){
           if(Datas.画像[I].src.match(/gif/)) Images[I+14]._element.src = "Images/" + Datas.画像[I].src;
           else Images[I+14]._element.src = "Images/" + Datas.画像[I].src + ".png";
         };
+        Images[I+14].opacity = 1;
+        if(Datas.画像[I].イン){
+          Images[I+14].opacity = 0;
+          Images[I+14].tl.fadeIn(Datas.画像[I].イン);
+        };
+        if(Datas.画像[I].アウト) Images[I+14].tl.fadeOut(Datas.画像[I].アウト);
         scene.addChild(Images[I+14]);
       };
     };
@@ -81,6 +87,9 @@ var Talk_Scene = function(Position){
     for(var I = 0; I < ChoiceText.length; I++) ChoiceText[I]._element.textContent = "";
     if(Datas.フラグ){
       switch(Datas.フラグ[1]){
+        case "リセット":
+          Flags = {};
+          break;
         case "=":
           switch(Datas.フラグ[0]){
             case "時間":
@@ -105,7 +114,8 @@ var Talk_Scene = function(Position){
               Flags[Datas.フラグ[0]] = new Date(Flags[Datas.フラグ[0]]).toLocaleString("ja-JP").slice(0,-3);
               break;
             default:
-              Flags[Datas.フラグ[0]] = Datas.フラグ[2];
+              if(!Flags[Datas.フラグ[0]]) Flags[Datas.フラグ[0]] = 0;
+              Flags[Datas.フラグ[0]] += Datas.フラグ[2];
               break;
           };
           break;
@@ -358,7 +368,8 @@ var Talk_Scene = function(Position){
     switch(Datas){
       case "戻":
         Datas = Save_Datas.場所;
-      case "ゲームロード":
+      case "スタート":
+      case "タイトル":
         delete Save_Datas.場所;
         break;
     };
@@ -408,6 +419,8 @@ var Talk_Scene = function(Position){
     };
     return(Datas);
   };
+
+  var Choice_Number = 0;
 
   scene.addEventListener("enterframe",function(){
     if(Black_Image.tl.queue.length) return;
@@ -596,7 +609,10 @@ var Talk_Scene = function(Position){
         Key_C();
         break;
       case "s":
-        if(!Next||Save_Datas.場所) return;
+        if(!Next||Save_Datas.場所){
+          console.log(Save_Datas.場所);
+          return;
+        };
         Save_Datas.場所 = Position;
         Next = "次";
         Datas.次 = "セーブ";
