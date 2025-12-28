@@ -463,7 +463,7 @@ var Talk_Scene = function(Position){
         Choice_Data = Datas.選択肢[Choice_Number][1];
       };
     };
-    ChoiceText[Choice_Number].枠2.opacity = 0.5 + Math.sin(game.frame * 0.15) * 0.3;
+    if(ChoiceText[Choice_Number]) ChoiceText[Choice_Number].枠2.opacity = 0.5 + Math.sin(game.frame * 0.15) * 0.3;
     if(Input.up) Input.up--;
     if(Input.down) Input.down--;
     if(Time){
